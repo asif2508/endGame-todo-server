@@ -16,7 +16,14 @@ async function run() {
       const taskCollection = client.db("taskDB").collection("tasks");
       
       app.get('/task', async (req, res)=>{
-        const query = {completed: false}
+        const query = {completed: false};
+        const cursor =  taskCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+      });
+
+      app.get('/completetask', async (req, res)=>{
+        const query = {completed: true};
         const cursor =  taskCollection.find(query);
         const result = await cursor.toArray();
         res.send(result);
